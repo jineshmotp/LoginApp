@@ -23,6 +23,12 @@ const LoginScreen: React.FC = () => {
   const userSocialLogin = useSelector(state => state.userSocialLogin)
   const {socialLoginData,socialLoginLoading,socialLoginerror } = userSocialLogin;
 
+  const gotoHomeScreen = async() => {
+
+    navigation.navigate('HomeScreen');
+
+  };
+
   const gotoSocialLogin = async() => {
 
 
@@ -31,7 +37,7 @@ const LoginScreen: React.FC = () => {
    console.log('pressed');
    GoogleSignin.configure({     
     offlineAccess:false,
-    webClientId: '1023632021975-4rndlinpopde42k8bv9th0uvdv5334k8.apps.googleusercontent.com',
+    webClientId: '1023632021975-j0tik4grlfpq243dbonrnj68i76d39tt.apps.googleusercontent.com',
     scopes:['profile','email']
    });
   
@@ -54,13 +60,13 @@ const LoginScreen: React.FC = () => {
   };
 
 
-  useEffect(() => {
-    if(socialLoginData !== null)
-    {  
-      console.log('outfrom frond end :',socialLoginData) ;  
-       navigation.navigate('AppScreen');
-    } 
-  }, [socialLoginData,socialLoginLoading]);
+  // useEffect(() => {
+  //   if(socialLoginData !== null)
+  //   {  
+  //     console.log('outfrom frond end :',socialLoginData) ;  
+  //      navigation.navigate('AppScreen');
+  //   } 
+  // }, [socialLoginData,socialLoginLoading]);
 
 
 
@@ -69,7 +75,7 @@ const LoginScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../../Images/logo.jpg')}
+          source={require('../../Images/logo.png')}
           style={{
             width: wp('80%'), // 80% of the screen width
             height: hp('20%'), // 20% of the screen height
@@ -82,7 +88,7 @@ const LoginScreen: React.FC = () => {
         styless={{ width: wp('80%'), backgroundColor: colors.primary }}
         contentStyle={{ height: hp('7%') }}
         labelStyle={{ fontSize: hp('2.5%'), color: colors.white, fontWeight: 'bold' }}
-        onPress={gotoSocialLogin}
+        onPress={gotoHomeScreen}
         label="GOOGLE LOGIN"
       />
 

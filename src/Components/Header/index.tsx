@@ -1,71 +1,76 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { StyleSheet, View, Image, Dimensions,TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { colors } from '../../Constants/colors';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import isTablet from '../../Utility/isTablet';
+import { Text } from 'react-native-elements';
 
-const Header = () => {
+const screenWidth = Dimensions.get('window').width;
+const tablet = isTablet(screenWidth);
+const iconSize = tablet ? wp('5%') : wp('7%');
+
+const Header = ({ LogoutBtnPress, BackBtnPress }) => {
+  const logoImageWidth = tablet ? wp('50%') : wp('40%');
+  const logoImageHeight = tablet ? hp('20%') : hp('15%');
+  const headerContainerPadding = tablet ? wp('10%') : wp('5%');
+  const backButtonTextStyle = tablet ? styles.backButtonTextTablet : styles.backButtonTextMobile;
+
   return (
-    <View style={styles.header}>
-      {/* Left Side - Logo */}
-      <View style={styles.leftContainer}>
-        <Image
-          source={require('../../Images/header-image.jpg')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
+    <View style={[styles.headerContainer, { paddingVertical: headerContainerPadding }]}>
+      <TouchableOpacity style={styles.notificationContainer} onPress={LogoutBtnPress}>
+        <SimpleLineIcons name="logout" size={iconSize} color={colors.black} />
+      </TouchableOpacity>
+      <View style={styles.logoTextContainer}>
+        <Image style={[styles.logoImage, { width: logoImageWidth, height: logoImageHeight }]} source={require("../../Images/logo.png")} />
       </View>
-
-      {/* Right Side - Button Icons */}
-      <View style={styles.rightContainer}>
-        <TouchableOpacity style={styles.button}>
-          <MIcon name="account-voice" size={wp('5%')} color={colors.primary} style={styles.circularIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <MIcon name="whatsapp" size={wp('5%')} color={colors.primary} style={styles.circularIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Icon name="file-circle-question" size={wp('5%')} color={colors.primary} style={styles.circularIcon} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.notificationContainer} onPress={BackBtnPress}>
+        <Ionicons name="chevron-back-outline" size={iconSize} color={colors.black} ></Ionicons>
+        <Text style={backButtonTextStyle}>Back</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
+export default Header;
+
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: wp('5%'),
-    paddingTop: hp('1%'),
-    paddingBottom: hp('1%'),
-    backgroundColor: colors.white,
-  },
-  leftContainer: {
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.transparent,
   },
-  logo: {
-    width: wp('15%'),
-    height: hp('5%'),
-  },
-  rightContainer: {
-    flexDirection: 'row',
+
+  logoTextContainer: {
+    flex: 0.6,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  button: {
-    borderRadius: wp('5%'), // Half of the desired button size for a circular shape
-    borderWidth: 1, // Adjust the border width as needed
-    borderColor: colors.secondary, // Set the border color
-    padding: wp('2%'), // Adjust padding as needed
-    marginRight: wp('3%'), // Add margin between the buttons
+
+  notificationContainer: {
+    flexDirection: 'row',
+    flex: 0.2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  circularIcon: {
-    borderRadius: wp('5%'), // Additional border radius for circular shape
-    overflow: 'hidden', // Ensure the border radius is applied
+
+  logoImage: {
+    resizeMode: 'cover',
+    borderWidth: 1,
+    borderColor: colors.transparent,
+  },
+
+  backButtonTextMobile: {
+    color:colors.black,
+    fontSize: wp('4%'),
+    marginLeft: wp('1%'),
+  },
+
+  backButtonTextTablet: {
+    color:colors.black,
+    fontSize: wp('5%'), // Adjust the font size as needed for tablet
+    marginLeft: wp('2%'), // Adjust the margin left as needed for tablet
   },
 });
-
-export default Header;
