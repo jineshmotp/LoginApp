@@ -7,6 +7,10 @@ export const colors = {
     tertiary:'#1f085f',
     transparent:'transparent',
 
+    btnBackground:'#fbd9d8',
+    btnSelectionBg:'#624585',
+    fontColor:'#624585',
+    headerBg:'#dfc7fb',
 
     red:'#e3000f',
     blue:'#134094',

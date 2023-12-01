@@ -6,10 +6,12 @@ import { colors } from '../../Constants/colors';
 const styles = StyleSheet.create({
 
     container: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: 'white',
+        flex: 1,       
+        resizeMode: 'cover',
         justifyContent: 'center',
+        alignItems: 'center',          
+        flexDirection: 'column',
+        
         paddingHorizontal: wp('5%'), // 5% of the screen width
       },
       imageContainer: {
@@ -24,6 +26,30 @@ const styles = StyleSheet.create({
       socialContainer: {
         marginTop: hp('2%'), // 2% of the screen height
       },
+      signinView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: hp('2%'),
+      },
+    
+      forgotPasswordText: {
+
+     
+        alignItems: 'center',
+        
+        paddingHorizontal: wp('2%'),
+        marginBottom: hp('2%'),
+      },
+
+
+      otherLabel: {   
+        
+        marginTop: hp('3%'),
+        paddingHorizontal: wp('3%'),
+    
+      },
+  
   
   });
   

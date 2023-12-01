@@ -3,9 +3,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {  userSocialLoginReducer,
+  userLoginReducer,
   } from './src/Redux/userReducer';
 
   const rootReducer = combineReducers({ 
+    userLogin:userLoginReducer,
     userSocialLogin:userSocialLoginReducer, 
   });  
 
@@ -13,14 +15,17 @@ import {  userSocialLoginReducer,
 
 // Get user details from AsyncStorage
 const getUserDetails = async () => {
-  const userDetails = await AsyncStorage.getItem('user');
+  const userDetails = await AsyncStorage.getItem('userDetails');
   return JSON.parse(userDetails) || null;
 };
 
 // Async function to get initial state
 const getInitialState = async () => ({
-    userLogin: { user: await getUserDetails() },
-    // other initial state properties...
+  userLoginuserRegister: {
+    userIdentificationData: await getUserDetails(),
+    userIdentificationLoading: false,
+    userIdentificationerror: null,
+  },
   });
   
   // Create the store using initial state

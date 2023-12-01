@@ -12,12 +12,14 @@ import Input from '../../Components/Input';
 import Toast from 'react-native-root-toast';
 
 
+
+
 import { useDispatch, useSelector } from 'react-redux';
-import { userLoginaction,userAnonymousaction } from '../../Redux/userActions';
+import { userRegisteraction } from '../../Redux/userActions';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 
-const LoginScreen: React.FC = () => {
+const RegisterScreen: React.FC = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -29,31 +31,32 @@ const LoginScreen: React.FC = () => {
 
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
- 
+  const [repassword, setRePassword] = useState(null);
   
-  const gotoHomeScreen = async() => {
-
-    navigation.navigate('BottomTabNav');
-
-  };
-
-
-
-  
-
-
  
+
   const OnchangeEmail = (item) => {
-   setEmail(item);
+
+    setEmail(item);
+   
   };
 
   const OnchangePassword = (item) => {
+
     setPassword(item);
+   
   };
 
-  const gotoLogin = async() => {
+  const OnchangeRePassword = (item) => {
 
-    if(!email || !password )
+    setRePassword(item);
+   
+  };
+
+
+  const registerAction = async() => {   
+
+    if(!email || !password || !repassword)
     {
 
       let message = 'Enter all fields';
@@ -68,46 +71,44 @@ const LoginScreen: React.FC = () => {
           fontSize: wp('4%'), // Adjust font size based on screen width
         },
       });
- 
+
+    }
+
+    if(password !== repassword)
+    {
+
+
+      let message = 'Please match the password';
+
+      Toast.show(message, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        textStyle: {
+          fontSize: wp('4%'), // Adjust font size based on screen width
+        },
+      });
 
     }
     else
     {
-
       let userdata = {
         email:email,
         password:password 
       }
 
-      await dispatch(userLoginaction(userdata));
-
+      await dispatch(userRegisteraction(userdata));
 
     }
 
   };
 
  
-
-  const loginasGuest = async() => {
-
-    await dispatch(userAnonymousaction());
-    
+  const gotoLogin = () => {
+    navigation.navigate('LoginScreen');
   };
-
-  const gotoRegisterScreen = () => {
-    navigation.navigate('RegisterScreen');
-  };
-
-
-
-  const gotoSocialLogin = async() => {
-  
-  };
-
-  const gotoForgotPassword = () => {
-    
-  };
-
 
   // useEffect(() => {
   //   if(userIdentificationData != null)
@@ -116,7 +117,6 @@ const LoginScreen: React.FC = () => {
   //      navigation.navigate('BottomTabNav');
   //   } 
   // }, [userIdentificationData]);
-
 
   return (
     <ImageBackground source={require('../../Images/bg.jpg')} style={styles.container}>
@@ -132,12 +132,10 @@ const LoginScreen: React.FC = () => {
         />
       </View>
 
-      
-
 
       <Input label="Email" secure={false} iconName="no" onChangeText={OnchangeEmail} />
      
-     <Input 
+          <Input 
             label="Password" 
             secure={true} 
             iconName="lock" 
@@ -145,43 +143,37 @@ const LoginScreen: React.FC = () => {
             onChangeText={OnchangePassword}
             />
 
-        <View style={styles.signinView}>
-           
+         <Input 
+            label="Re Enter Password" 
+            secure={true} 
+            iconName="lock" 
+            iconNametwo="eye" 
+            onChangeText={OnchangeRePassword}
+            />
 
-            <TouchableOpacity onPress={gotoForgotPassword} style={styles.forgotPasswordText} >
-              <Label textval="Forgot password ?" styless={{ color: colors.white, fontSize: wp('3.8%') }} />
-            </TouchableOpacity>
+       
 
             <ButtonInput
-              styless={{ width: wp('28%'), backgroundColor: colors.btnBackground }}
+              styless={{ width: wp('80%'), backgroundColor: colors.btnBackground }}
               contentStyle={{ height: hp('7%') }}
               labelStyle={{ fontSize: hp('2.5%'), color: colors.fontColor, fontWeight: 'bold' }}
-              onPress={gotoLogin}
-              label="Sign In"
+              onPress={registerAction}
+              label="Register"
               iconP="no"
             />
-       </View> 
+       
 
      
          
-      <ButtonInput
-        styless={{ width: wp('80%'), backgroundColor: colors.btnBackground }}
-        contentStyle={{ height: hp('7%') }}
-        labelStyle={{ fontSize: hp('2.5%'), color: colors.fontColor, fontWeight: 'bold' }}
-        onPress={gotoHomeScreen}
-        label="Login with Gmail"
-      />
+      
 
-            <TouchableOpacity onPress={gotoRegisterScreen} style={styles.otherLabel} >
-              <Label textval="Sign Up" styless={{ color: colors.white, fontSize: wp('3.8%') }} />
+            <TouchableOpacity onPress={gotoLogin} style={styles.otherLabel} >
+              <Label textval="Sign in" styless={{ color: colors.white, fontSize: wp('3.8%') }} />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={loginasGuest} style={styles.otherLabel}  >
-              <Label textval="Anonymous Sign Up" styless={{ color: colors.white, fontSize: wp('3.8%') }} />
-            </TouchableOpacity>
-
+         
     </ImageBackground>
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

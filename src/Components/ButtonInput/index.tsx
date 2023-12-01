@@ -9,18 +9,24 @@ interface ButtonInputProps {
   labelStyle?: object; // Custom styles for the button label
   onPress: () => void; // Function to execute on button press
   label: string; // Button label
+  iconP:string;
 }
 
-const ButtonInput: React.FC<ButtonInputProps> = ({ styless, contentStyle, labelStyle, onPress, label }) => {
+const ButtonInput: React.FC<ButtonInputProps> = ({ styless, contentStyle, labelStyle, onPress, label,iconP }) => {
   return (
     <View style={styles.buttonContainer}> 
       
       <TouchableOpacity onPress={onPress} style={[styles.button, styless, contentStyle]}>
-      
-          <View style={styles.iconContainer}>  
+
+      {iconP !== 'no' && (
+        <View style={styles.iconContainer}>  
           
-            <Icon name='google' size={wp('5%')} color={colors.white} style={styles.icon} />
-         </View>
+        <Icon name='google' size={wp('5%')} color={colors.fontColor} style={styles.icon} />
+     </View>
+     
+      )}
+      
+        
          <Text style={[styles.buttonLabel, labelStyle]}>{label}</Text> 
       </TouchableOpacity>       
    </View>
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: wp('20%') / 2, // Make the icon container rounded
   },
   icon: {
-    color: colors.white,
+    color: colors.fontColor,
   },
   spaceBetween: {
     marginRight: wp('5%'), // Adjust the space between buttons as needed

@@ -12,9 +12,9 @@ const tablet = isTablet(screenWidth);
 const iconSize = tablet ? wp('5%') : wp('7%');
 
 const Header = ({ LogoutBtnPress, BackBtnPress }) => {
-  const logoImageWidth = tablet ? wp('50%') : wp('40%');
-  const logoImageHeight = tablet ? hp('20%') : hp('15%');
-  const headerContainerPadding = tablet ? wp('10%') : wp('5%');
+  const logoImageWidth = tablet ? wp('25%') : wp('20%');
+  const logoImageHeight = tablet ? hp('15%') : hp('8%');
+  const headerContainerPadding = tablet ? wp('3%') : wp('3%');
   const backButtonTextStyle = tablet ? styles.backButtonTextTablet : styles.backButtonTextMobile;
 
   return (
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.transparent,
+    backgroundColor: colors.headerBg,
   },
 
   logoTextContainer: {
